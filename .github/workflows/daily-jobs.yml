@@ -2,8 +2,9 @@ name: Daily Job Search Agent
 
 on:
   schedule:
+    # Her kuni soat 09:00 Toshkent vaqtida (04:00 UTC)
     - cron: '0 4 * * *'
-  workflow_dispatch:
+  workflow_dispatch:  # Qo'lda ham ishga tushirish mumkin
 
 jobs:
   run-agent:
@@ -30,5 +31,6 @@ jobs:
           TG_API_ID: ${{ secrets.TG_API_ID }}
           TG_API_HASH: ${{ secrets.TG_API_HASH }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TG_SESSION_STRING: ${{ secrets.TG_SESSION_STRING }}
           DB_PATH: vacancies.db
         run: python main.py
