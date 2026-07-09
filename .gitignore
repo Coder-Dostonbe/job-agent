@@ -8,8 +8,8 @@ __pycache__/
 *.pyd
 .Python
 
-# Telethon session files
-*.session
+# Telethon session files — agent.session is committed for Railway deployment
+# *.session
 *.session-journal
 
 # Database
