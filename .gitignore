@@ -1,0 +1,32 @@
+# Environment variables (DO NOT commit credentials)
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Telethon session files
+*.session
+*.session-journal
+
+# Database
+*.db
+*.sqlite3
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
