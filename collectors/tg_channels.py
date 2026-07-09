@@ -1,10 +1,11 @@
 """Telegram ish kanallaridan postlarni o'qish (Telethon, user-akkaunt orqali).
 
-Eslatma: oddiy bot kanal tarixini o'qiy olmaydi, shuning uchun Telethon
-sizning akkauntingiz bilan ulanadi. Birinchi ishga tushirishda telefon
-raqam va kod so'raladi, keyin 'agent.session' fayli saqlanib qoladi.
+GitHub Actions uchun: TG_SESSION_STRING env var orqali string session ishlatiladi.
+Local uchun: 'agent.session' fayli ishlatiladi.
+Session yaratish: python create_session.py
 """
 import logging
+import os
 from datetime import datetime, timedelta, timezone
 
 import config
@@ -19,12 +20,29 @@ async def collect() -> list[dict]:
         log.warning("TG_API_ID/TG_API_HASH yo'q — Telegram collector o'tkazib yuborildi")
         return []
 
-    from telethon import TelegramClient  # import shu yerda: creds bo'lmasa kerak emas
+    # Session mavjudligini tekshir
+    has_string_session = bool(getattr(config, 'TG_SESSION_STRING', ''))
+    has_session_file = os.path.exists("agent.session")
+
+    if not has_string_session and not has_session_file:
+        log.warning(
+            "Telethon session yo'q (agent.session ham, TG_SESSION_STRING ham). "
+            "Telegram kanallar o'tkazib yuborildi."
+        )
+        return []
+
+    from telethon import TelegramClient
+    from telethon.sessions import StringSession
 
     results = []
     since = datetime.now(timezone.utc) - timedelta(hours=config.TG_LOOKBACK_HOURS)
 
-    async with TelegramClient("agent", int(config.TG_API_ID), config.TG_API_HASH) as client:
+    if has_string_session:
+        session = StringSession(config.TG_SESSION_STRING)
+    else:
+        session = "agent"
+
+    async with TelegramClient(session, int(config.TG_API_ID), config.TG_API_HASH) as client:
         for channel in config.TG_CHANNELS:
             try:
                 async for msg in client.iter_messages(channel, limit=80):
