@@ -1,6 +1,13 @@
 """Agent sozlamalari — Doston profili asosida."""
 import os
 
+# .env faylini yuklaymiz (local test uchun)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # ============ PROFIL ============
 PROFILE = {
     "name": "Doston",
