@@ -32,7 +32,7 @@ PROFILE = {
 SEARCH_QUERIES = ["python", "django", "backend"]
 
 # hh.uz sozlamalari
-HH_AREA_ID = "97"  # Uzbekistan (tekshirish: https://api.hh.ru/areas)
+HH_AREA_ID = "97"  # Uzbekistan
 HH_HOST = "hh.uz"
 
 # Kuzatiladigan Telegram ish kanallari (username, @siz)
@@ -50,14 +50,16 @@ OLX_URLS = [
 ]
 
 # Scoring
-AI_SCORE_THRESHOLD = 55   # shu balldan yuqorilar Claude'ga yuboriladi
-AI_MAX_VACANCIES = 6      # kuniga maksimal AI tahlil (xarajatni cheklash)
-REPORT_MIN_SCORE = 40     # hisobotga kiritish uchun minimal ball
+AI_SCORE_THRESHOLD = 55
+AI_MAX_VACANCIES = 6
+REPORT_MIN_SCORE = 40
 
-# ============ MAXFIY KALITLAR (.env yoki Railway Variables) ============
+# ============ MAXFIY KALITLAR (.env yoki GitHub Secrets) ============
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
-TG_API_ID = os.getenv("TG_API_ID", "")        # my.telegram.org dan
+TG_API_ID = os.getenv("TG_API_ID", "")
 TG_API_HASH = os.getenv("TG_API_HASH", "")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 DB_PATH = os.getenv("DB_PATH", "vacancies.db")
+# Telethon string session (GitHub Actions uchun — phone auth kerak emas)
+TG_SESSION_STRING = os.getenv("TG_SESSION_STRING", "")
